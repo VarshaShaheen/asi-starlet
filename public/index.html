@@ -4,16 +4,65 @@
     <title>OpenAI Prompt Box Example</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/2.1.2/tesseract.min.js"></script>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
-<input type="file" id="imageInput" accept="image/*">
-<button onclick="showPromptImage()">Recognize Text</button>
-<br><br>
-<input type="text" id="text"/>
-<button onclick="prompt(document.getElementById('text').value)">Prompt</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assi</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+<div class="aHeader">
+    <h2>Assi</h2>
+</div>
+<div class="aContainer">
+    <div class="aInput">
+        <h2>Enter the name of medicine</h2>
+        <input type="text" id="text">
+        </input>
 
-<div id="output"></div>
+        <button onclick="prompt(document.getElementById('text').value)" class="aButton">Generate</button>
 
+        <div class="aOr">OR</div>
+
+        <input type="file" id="imageInput" accept="image/*" class="aFileInput" type="file" />
+        <label class="aFileInputLabel" for="imageInput">
+            <svg
+                    width="72"
+                    height="71"
+                    viewBox="0 0 72 71"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                        d="M68.5416 56.2083C68.5416 57.7775 67.9182 59.2825 66.8086 60.392C65.699 61.5016 64.1941 62.125 62.6249 62.125H9.37492C7.80572 62.125 6.30079 61.5016 5.1912 60.392C4.08161 59.2825 3.45825 57.7775 3.45825 56.2083V23.6667C3.45825 22.0975 4.08161 20.5925 5.1912 19.483C6.30079 18.3734 7.80572 17.75 9.37492 17.75H21.2083L27.1249 8.875H44.8749L50.7916 17.75H62.6249C64.1941 17.75 65.699 18.3734 66.8086 19.483C67.9182 20.5925 68.5416 22.0975 68.5416 23.6667V56.2083Z"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                />
+                <path
+                        d="M36.0001 50.2917C42.5354 50.2917 47.8334 44.9937 47.8334 38.4583C47.8334 31.923 42.5354 26.625 36.0001 26.625C29.4647 26.625 24.1667 31.923 24.1667 38.4583C24.1667 44.9937 29.4647 50.2917 36.0001 50.2917Z"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                />
+            </svg>
+        </label>
+        <button onclick="showPromptImage()"class="aButton">Upload Image</button>
+    </div>
+    <div class="aOutput" >
+        <h2>Result</h2>
+        <div id="output" class="aTextarea" >
+        </div>
+        <video src="video.mp4" id="video" style="max-width: 500px" loop></video>
+    </div>
+
+</div>
 <script>
     async function showPromptImage() {
 
@@ -26,19 +75,34 @@
                 textFromImage = result.data.text;
             });
         console.log(textFromImage);
+        await prompt(textFromImage)
     }
 
     async function prompt(promptText) {
         if (promptText != null && promptText != "") {
             // Send the prompt to the OpenAI API
-            $.post("http://localhost:3000/openai", { body: {prompt: `What are the uses, side effects, precautions to be taken for the following medicine: ${promptText}`} }, function(data) {
+            $.post("http://localhost:3000/openai", { body: {prompt: `What are the uses, side effects, precautions to be taken for the following medicine: ${promptText}`} }, async function(data) {
                 // Display the API response
                 const response = data.message;
-                var msg = new SpeechSynthesisUtterance();
+                const msg = new SpeechSynthesisUtterance();
                 msg.text = response;
+                let voices = []
+                voices = window.speechSynthesis.getVoices();
+                msg.voice = voices[8]
                 window.speechSynthesis.speak(msg);
+                const vid = document.getElementById("video");
+                vid.play();
+                let i = 0;
+                const speed = 50;
+                typeWriter();
+                function typeWriter() {
+                    if (i < data.message.length) {
+                        $("#output").html("<p style='word-break: break-word'>" + data.message.slice(0, i) + "</p>");
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    }
+                }
 
-                $("#output").html("<pre>" + JSON.stringify(data) + "</pre>");
             });
         }
     }

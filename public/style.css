@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap");
+
+:root {
+    --themeColor: #ff7a7a;
+}
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+}
+.aTextarea {
+    background: #f8f8f8;
+    border: 1px solid #dee3eb;
+    border-radius: 2px;
+    padding: 12px;
+    resize: none;
+    outline: none;
+}
+button.aButton {
+    background: var(--themeColor);
+    border-radius: 4px;
+    height: 40px;
+    min-width: 160px;
+    outline: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.aHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 100px;
+    min-height: 75px;
+    border-bottom: 1px solid #dee3eb;
+    margin-bottom: 20px;
+}
+.aHeader h2 {
+    color: var(--themeColor);
+}
+.aContainer {
+    display: flex;
+    padding: 0 80px;
+}
+.aInput,
+.aOutput {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.output_class{
+    max-height: 200px;
+    display: block;
+    width: 400px;
+    white-space: pre-wrap;
+    font-weight: bold;
+}
+.aInput > *,
+.aOutput > * {
+    margin-bottom: 24px;
+}
+.aOr {
+    padding: 0px 0;
+    text-align: center;
+}
+.aFileInput {
+    display: none;
+}
+.aFileInputLabel {
+    background: #f8f8f8;
+    border: 1px solid #dee3eb;
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+}
+.aFileInputLabel svg {
+    stroke: var(--themeColor);
+}
+.aInput {
+    flex: 0.4;
+}
+.aOutput {
+    flex: 0.6;
+}
+.video{
+    width: 1000px;
+    height: 100%;
+    object-fit: cover;
+
+}

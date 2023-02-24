@@ -20,7 +20,7 @@ app.post('/openai', (req, res) => {
 const OpenAi = async (extraParams) => {
     try {
         const openAiConfig = new Configuration({
-            apiKey: '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',
+            apiKey: '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',
         });
 
         const openAi = new OpenAIApi(openAiConfig);
