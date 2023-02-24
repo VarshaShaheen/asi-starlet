@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenAI Prompt Box Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/2.1.2/tesseract.min.js"></script>
+</head>
+<body>
+<input type="file" id="imageInput" accept="image/*">
+<button onclick="showPromptImage()">Recognize Text</button>
+<br><br>
+<input type="text" id="text"/>
+<button onclick="prompt(document.getElementById('text').value)">Prompt</button>
+
+<div id="output"></div>
+
+<script>
+    async function showPromptImage() {
+
+        const image = document.getElementById('imageInput').files[0];
+
+        let textFromImage;
+        await Tesseract.recognize(image)
+            .then(result => {
+                console.log({ result})
+                textFromImage = result.data.text;
+            });
+        console.log(textFromImage);
+    }
+
+    async function prompt(promptText) {
+        if (promptText != null && promptText != "") {
+            // Send the prompt to the OpenAI API
+            $.post("http://localhost:3000/openai", { body: {prompt: `What are the uses, side effects, precautions to be taken for the following medicine: ${promptText}`} }, function(data) {
+                // Display the API response
+                const response = data.message;
+                var msg = new SpeechSynthesisUtterance();
+                msg.text = response;
+                window.speechSynthesis.speak(msg);
+
+                $("#output").html("<pre>" + JSON.stringify(data) + "</pre>");
+            });
+        }
+    }
+</script>
+</body>
+</html>
