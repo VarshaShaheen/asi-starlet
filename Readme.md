@@ -56,21 +56,6 @@ Project ASI is a web-based application and is compatible with modern web browser
 
 We take your privacy seriously. Project ASI does not store images of medications or any personal information unless you choose to create an account. For more details on our privacy policy, please refer to [link to privacy policy].
 
-## Support and Feedback
-
-If you encounter any issues, have suggestions, or need assistance, please don't hesitate to contact our support team at [support@email.com].
-
-We value your feedback as it helps us improve Project ASI and make it even more helpful for older adults and their caregivers.
-
-## Contribution
-
-If you would like to contribute to the development of Project ASI, please check out our [GitHub repository](https://github.com/asi-starlet) for more information on how to get involved.
-
-## License
-
-Project ASI is released under the [MIT License](LICENSE.md).
-
----
 
 *Project ASI is a compassionate initiative to empower older adults and simplify their medication management. We hope this tool improves the lives of many by providing easy access to important medication information.*
 
